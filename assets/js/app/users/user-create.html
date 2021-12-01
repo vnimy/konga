@@ -1,76 +1,157 @@
-
 <form class="">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group padding-right" ng-class="{'has-error' : errors.username}">
-                <label class="control-label">Username <span class="text-danger">*</span></label>
-                <input ng-model="user.username" class="form-control" placeholder="Enter a username...">
-                <div class="text-danger" ng-if="errors.username" data-ng-bind="errors.username"></div>
-            </div>
-            <div class="form-group padding-right" ng-class="{'has-error' : errors.firstName}">
-                <label class="control-label">First Name <span class="text-danger">*</span></label>
-                <input ng-model="user.firstName" class="form-control" placeholder="Enter the user's first name">
-                <div class="text-danger" ng-if="errors.firstName" data-ng-bind="errors.firstName"></div>
-            </div>
-            <div class="form-group padding-right" ng-class="{'has-error' : errors.lastName}">
-                <label class="control-label">Last Name <span class="text-danger">*</span></label>
-                <input ng-model="user.lastName" class="form-control" placeholder="Enter the user's last name...">
-                <div class="text-danger" ng-if="errors.lastName" data-ng-bind="errors.lastName"></div>
-            </div>
-            <div class="form-group padding-right" ng-class="{'has-error' : errors.email}">
-                <label class="control-label">Email address</label>
-                <input type="email" ng-model="user.email" class="form-control" placeholder="Enter a valid email address...">
-                <div class="text-danger" ng-if="errors.email" data-ng-bind="errors.email"></div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group" ng-class="{'has-error' : errors.password}">
-                <label class="control-label">Password <span class="text-danger">*</span></label>
-                <input type="password" ng-model="user.passports.password" class="form-control" placeholder="The password the user will use to login to Konga...">
-                <div class="text-danger" ng-if="errors.password" data-ng-bind="errors.password"></div>
-            </div>
-            <div class="form-group" ng-class="{'has-error' : errors.password_confirmation}">
-                <label class="control-label">Confirm password <span class="text-danger">*</span></label>
-                <input type="password" ng-model="user.password_confirmation" class="form-control" placeholder="Confirm the above password...">
-                <div class="text-danger" ng-if="errors.password_confirmation" data-ng-bind="errors.password_confirmation"></div>
-            </div>
-            <br>
-            <div class="form-group well">
-                <label class="col-md-8 control-label no-margin">Will this user be active?</label>
-                <div class="col-md-4 text-right">
-                    <input
-                            bs-switch
-                            ng-model="user.active"
-                            switch-size="mini"
-                            type="checkbox"
-                            switch-on-text="YES"
-                            switch-off-text="NO"
-                    >
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <div class="form-group well">
-                <label class="col-md-8 control-label no-margin">Is this user an administrator?</label>
-                <div class="col-md-4 text-right">
-                    <input
-                            bs-switch
-                            ng-model="user.admin"
-                            switch-size="mini"
-                            type="checkbox"
-                            switch-on-text="YES"
-                            switch-off-text="NO"
-                    >
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div
+        class="form-group padding-right"
+        ng-class="{'has-error' : errors.username}"
+      >
+        <label class="control-label"
+          >用户名 <span class="text-danger">*</span></label
+        >
+        <input
+          ng-model="user.username"
+          class="form-control"
+          placeholder="输入用户名..."
+        />
+        <div
+          class="text-danger"
+          ng-if="errors.username"
+          data-ng-bind="errors.username"
+        ></div>
+      </div>
+      <div
+        class="form-group padding-right"
+        ng-class="{'has-error' : errors.firstName}"
+      >
+        <label class="control-label"
+          >姓氏 <span class="text-danger">*</span></label
+        >
+        <input
+          ng-model="user.firstName"
+          class="form-control"
+          placeholder="输入用户的姓氏..."
+        />
+        <div
+          class="text-danger"
+          ng-if="errors.firstName"
+          data-ng-bind="errors.firstName"
+        ></div>
+      </div>
+      <div
+        class="form-group padding-right"
+        ng-class="{'has-error' : errors.lastName}"
+      >
+        <label class="control-label"
+          >名称 <span class="text-danger">*</span></label
+        >
+        <input
+          ng-model="user.lastName"
+          class="form-control"
+          placeholder="输入用户的名称..."
+        />
+        <div
+          class="text-danger"
+          ng-if="errors.lastName"
+          data-ng-bind="errors.lastName"
+        ></div>
+      </div>
+      <div
+        class="form-group padding-right"
+        ng-class="{'has-error' : errors.email}"
+      >
+        <label class="control-label">邮箱地址</label>
+        <input
+          type="email"
+          ng-model="user.email"
+          class="form-control"
+          placeholder="输入有效的邮箱地址..."
+        />
+        <div
+          class="text-danger"
+          ng-if="errors.email"
+          data-ng-bind="errors.email"
+        ></div>
+      </div>
     </div>
-    <br>
-    <button type="submit" data-ng-disabled="busy" class="btn btn-primary btn-block" ng-click="createUser()">
-        <i class="mdi mdi-check" ng-if="!busy"></i>
-        <fading-circle-spinner class="spinner spinner-invert pull-left" ng-if="busy"></fading-circle-spinner>
-        Submit User
-    </button>
-
-
+    <div class="col-md-6">
+      <div class="form-group" ng-class="{'has-error' : errors.password}">
+        <label class="control-label"
+          >密码 <span class="text-danger">*</span></label
+        >
+        <input
+          type="password"
+          ng-model="user.passports.password"
+          class="form-control"
+          placeholder="登录KONGA的密码..."
+        />
+        <div
+          class="text-danger"
+          ng-if="errors.password"
+          data-ng-bind="errors.password"
+        ></div>
+      </div>
+      <div
+        class="form-group"
+        ng-class="{'has-error' : errors.password_confirmation}"
+      >
+        <label class="control-label"
+          >确认密码 <span class="text-danger">*</span></label
+        >
+        <input
+          type="password"
+          ng-model="user.password_confirmation"
+          class="form-control"
+          placeholder="确认上面的密码..."
+        />
+        <div
+          class="text-danger"
+          ng-if="errors.password_confirmation"
+          data-ng-bind="errors.password_confirmation"
+        ></div>
+      </div>
+      <br />
+      <div class="form-group well">
+        <label class="col-md-8 control-label no-margin">是否激活该用户？</label>
+        <div class="col-md-4 text-right">
+          <input
+            bs-switch
+            ng-model="user.active"
+            switch-size="mini"
+            type="checkbox"
+            switch-on-text="是"
+            switch-off-text="否"
+          />
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="form-group well">
+        <label class="col-md-8 control-label no-margin">是否管理员？</label>
+        <div class="col-md-4 text-right">
+          <input
+            bs-switch
+            ng-model="user.admin"
+            switch-size="mini"
+            type="checkbox"
+            switch-on-text="是"
+            switch-off-text="否"
+          />
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <button
+    type="submit"
+    data-ng-disabled="busy"
+    class="btn btn-primary btn-block"
+    ng-click="createUser()"
+  >
+    <i class="mdi mdi-check" ng-if="!busy"></i>
+    <fading-circle-spinner
+      class="spinner spinner-invert pull-left"
+      ng-if="busy"
+    ></fading-circle-spinner>
+    提交用户
+  </button>
 </form>

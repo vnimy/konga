@@ -1,8 +1,8 @@
 <div class="col col-sm-offset-3">
   <div class="alert alert-info">
     <small
-      >* For hosts, paths, methods and protocols, snis, sources, headers and destinations
-      press enter to apply every value you type</small
+      >*
+      按<code>Enter</code>键来添加<code>主机</code>、<code>路径</code>、<code>方法</code>、<code>协议</code>、<code>SNI</code>、<code>来源</code>、<code>报头</code>和<code>目的地</code>的值</small
     >
   </div>
 </div>
@@ -17,9 +17,7 @@
       ng-if="errors.name"
       data-ng-bind="errors.name"
     ></div>
-    <p class="help-block">
-      The name of the Route.
-    </p>
+    <p class="help-block">The name of the Route.</p>
   </div>
 </div>
 <div class="form-group" ng-if="isGatewayVersionEqOrGreater('1.1.0-rc1')">
@@ -41,9 +39,7 @@
         uib-typeahead="tag for tag in tags | filter:$viewValue | limitTo:10"
       />
     </chips>
-    <p class="help-block">
-      Optionally add tags to the route
-    </p>
+    <p class="help-block">Optionally add tags to the route</p>
   </div>
 </div>
 <div class="form-group" ng-class="{'has-error' : errors.hosts}">
@@ -111,8 +107,9 @@
     </chips>
     <p class="help-block">
       One or more lists of values indexed by header name that will cause this
-      Route to match if present in the request. The <code>Host</code> header cannot be used
-      with this attribute: hosts should be specified using the <code>hosts</code> attribute.<br>
+      Route to match if present in the request. The <code>Host</code> header
+      cannot be used with this attribute: hosts should be specified using the
+      <code>hosts</code> attribute.<br />
       <code>Field values format example: x-some-header:foo,bar</code>
     </p>
   </div>

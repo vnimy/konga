@@ -4,35 +4,33 @@
   angular.module('frontend.settings', []);
 
   // Module configuration
-  angular.module('frontend.settings')
-    .config([
-      '$stateProvider',
-      function config($stateProvider) {
-        $stateProvider
-          .state('settings', {
-            url: '/settings',
-            parent: 'frontend',
-            data: {
-              access: 0,
-              pageName: "Settings",
-              displayName: "settings",
-              prefix: '<i class="mdi mdi-settings"></i>'
+  angular.module('frontend.settings').config([
+    '$stateProvider',
+    function config($stateProvider) {
+      $stateProvider.state('settings', {
+        url: '/settings',
+        parent: 'frontend',
+        data: {
+          access: 0,
+          pageName: '设置',
+          displayName: '设置',
+          prefix: '<i class="mdi mdi-settings"></i>',
+        },
+        views: {
+          'content@': {
+            templateUrl: 'js/app/settings/index.html',
+            controller: 'SettingsController',
+            resolve: {
+              _integrations: [
+                '$http',
+                function ($http) {
+                  return $http.get('api/settings/integrations');
+                },
+              ],
             },
-            views: {
-              'content@': {
-                templateUrl: 'js/app/settings/index.html',
-                controller: 'SettingsController',
-                resolve: {
-                  _integrations : ['$http', function ($http) {
-                    return $http.get('api/settings/integrations');
-                  }]
-                }
-
-              }
-            }
-          })
-
-      }
-    ])
-  ;
-}());
+          },
+        },
+      });
+    },
+  ]);
+})();

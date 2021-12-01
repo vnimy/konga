@@ -6,70 +6,83 @@
 (function () {
   'use strict';
 
-  angular.module('frontend.services')
-    .controller('ServiceController', [
-      '$scope', '$rootScope', '$state', 'SettingsService', '$log', 'AuthService', '_service',
-      function controller($scope, $rootScope, $state, SettingsService, $log,AuthService, _service) {
+  angular.module('frontend.services').controller('ServiceController', [
+    '$scope',
+    '$rootScope',
+    '$state',
+    'SettingsService',
+    '$log',
+    'AuthService',
+    '_service',
+    function controller(
+      $scope,
+      $rootScope,
+      $state,
+      SettingsService,
+      $log,
+      AuthService,
+      _service
+    ) {
+      $scope.service = _service.data;
 
-        $scope.service = _service.data
+      // Fix empty object properties
+      fixProperties();
 
-        // Fix empty object properties
-        fixProperties()
+      $state.current.data.pageName =
+        ($scope.service.name || $scope.service.id) + ' 服务';
+      $scope.activeSection = 0;
+      $scope.sections = [
+        {
+          name: '服务详情',
+          icon: 'mdi mdi-information-outline',
+          isVisible: true,
+        },
+        {
+          name: '路由',
+          icon: 'mdi mdi-directions-fork',
+          isVisible: AuthService.hasPermission('routes', 'read'),
+        },
+        {
+          name: '插件',
+          icon: 'mdi mdi-power-plug',
+          isVisible: AuthService.hasPermission('plugins', 'read'),
+        },
+        {
+          name: 'Eligible consumers <span class="label label-danger">beta</span>',
+          icon: 'mdi mdi-account-multiple-outline',
+          isVisible: true,
+        },
+        // {
+        //     name : 'Health Checks',
+        //     icon : 'mdi mdi-heart-pulse',
+        //     isVisible : true
+        // }
+      ];
 
-        $state.current.data.pageName = "Service " + ($scope.service.name || $scope.service.id)
-        $scope.activeSection = 0;
-        $scope.sections = [
-          {
-            name: 'Service Details',
-            icon: 'mdi mdi-information-outline',
-            isVisible: true
-          },
-          {
-            name: 'Routes',
-            icon: 'mdi mdi-directions-fork',
-            isVisible: AuthService.hasPermission('routes','read')
-          },
-          {
-            name: 'Plugins',
-            icon: 'mdi mdi-power-plug',
-            isVisible: AuthService.hasPermission('plugins','read')
-          },
-          {
-            name: 'Eligible consumers <span class="label label-danger">beta</span>',
-            icon: 'mdi mdi-account-multiple-outline',
-            isVisible: true
-          },
-          // {
-          //     name : 'Health Checks',
-          //     icon : 'mdi mdi-heart-pulse',
-          //     isVisible : true
-          // }
-        ]
+      $scope.showSection = function (index) {
+        $scope.activeSection = index;
+      };
 
-
-        $scope.showSection = function (index) {
-          $scope.activeSection = index
-        }
-
-        function fixProperties() {
-          var problematicProperties = ['uris', 'hosts', 'methods']
-          problematicProperties.forEach(function (property) {
-            if ($scope.service[property] && isObject($scope.service[property]) && !Object.keys($scope.service[property]).length) {
-              $scope.service[property] = ""
-            }
-          })
-        }
-
-        function isObject(obj) {
-          return obj === Object(obj);
-        }
-
-
-        $scope.$on('user.node.updated', function (node) {
-          $state.go('services')
-        })
-
+      function fixProperties() {
+        var problematicProperties = ['uris', 'hosts', 'methods'];
+        problematicProperties.forEach(function (property) {
+          if (
+            $scope.service[property] &&
+            isObject($scope.service[property]) &&
+            !Object.keys($scope.service[property]).length
+          ) {
+            $scope.service[property] = '';
+          }
+        });
       }
-    ])
-  ;
-}());
+
+      function isObject(obj) {
+        return obj === Object(obj);
+      }
+
+      $scope.$on('user.node.updated', function (node) {
+        $state.go('services');
+      });
+    },
+  ]);
+})();

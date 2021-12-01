@@ -1,14 +1,14 @@
 <div class="col col-sm-offset-3">
   <div class="alert alert-info">
     <small
-      >* For hosts, paths, methods and protocols, snis, sources, headers and destinations
-      press enter to apply every value you type</small
+      >* 按<code>Enter</code>键来添加<code>主机</code>、<code>路径</code>、<code>方法</code>、<code>协议</code>、<code>SNI</code>、<code>来源</code>、<code>报头</code>和<code>目的地</code>的值</small
+</small
     >
   </div>
 </div>
 <div class="form-group" ng-class="{'has-error' : errors.name}">
   <label class="col-sm-3 control-label"
-    >Name <br /><em><small class="help-block">optional</small></em></label
+    >名称 <br /><em><small class="help-block">可选</small></em></label
   >
   <div class="col-sm-9">
     <input ng-model="route.name" class="form-control" />
@@ -18,13 +18,13 @@
       data-ng-bind="errors.name"
     ></div>
     <p class="help-block">
-      The name of the Route.
+      路由的名称
     </p>
   </div>
 </div>
 <div class="form-group" ng-if="isGatewayVersionEqOrGreater('1.1.0-rc1')">
   <label class="col-sm-3 control-label"
-    >Tags <br /><em><small class="help-block">optional</small></em></label
+    >标签 <br /><em><small class="help-block">可选</small></em></label
   >
   <div class="col-sm-9">
     <chips ng-model="route.tags">
@@ -42,13 +42,13 @@
       />
     </chips>
     <p class="help-block">
-      Optionally add tags to the route
+     路由的标签
     </p>
   </div>
 </div>
 <div class="form-group" ng-class="{'has-error' : errors.hosts}">
   <label class="col-sm-3 control-label"
-    >Hosts <br /><em><small class="help-block">semi-optional</small></em></label
+    >主机 <br /><em><small class="help-block">半可选</small></em></label
   >
   <div class="col-sm-9">
     <chips ng-model="route.hosts">
@@ -67,14 +67,13 @@
       data-ng-bind="errors.hosts"
     ></div>
     <p class="help-block">
-      A list of domain names that match this Route. For example: example.com. At
-      least one of hosts, paths, or methods must be set.
+      匹配路由的域名列表，如：example.com。<code>主机</code>、<code>路径</code>和<code>方法</code>中至少设置其中一个。
     </p>
   </div>
 </div>
 <div class="form-group" ng-class="{'has-error' : errors.paths}">
   <label class="col-sm-3 control-label"
-    >Paths <br /><em><small class="help-block">semi-optional</small></em></label
+    >路径 <br /><em><small class="help-block">半可选</small></em></label
   >
   <div class="col-sm-9">
     <chips ng-model="route.paths">
@@ -87,17 +86,15 @@
       <input chip-control />
     </chips>
     <p class="help-block">
-      A list of paths that match this Route. For example: /my-path. At least one
-      of <code>hosts</code>, <code>paths</code>, or <code>methods</code> must be
-      set.
+      匹配路由的路径，如：/my-path。<code>主机</code>、<code>路径</code>和<code>方法</code>中必须至少设置其中一个。
     </p>
   </div>
 </div>
 
 <div class="form-group" ng-class="{'has-error' : errors.headers}">
   <label class="col-sm-3 control-label"
-    >Headers <br /><em
-      ><small class="help-block">semi-optional</small></em
+    >报头 <br /><em
+      ><small class="help-block">半可选</small></em
     ></label
   >
   <div class="col-sm-9">
@@ -110,17 +107,15 @@
       </chip-tmpl>
       <input chip-control />
     </chips>
-    <p class="help-block">
-      One or more lists of values indexed by header name that will cause this
-      Route to match if present in the request. The <code>Host</code> header cannot be used
-      with this attribute: hosts should be specified using the <code>hosts</code> attribute.<br>
-      <code>Field values format example: x-some-header:foo,bar</code>
+    <p class="help-block">一个或多个报头值，如果出现在请求中，将匹配该路由。
+      不能使用主机头<code>Host</code>，如要匹配主机，请设置<code>主机</code>属性。<br>
+      字段值示例：<code>x-some-header:foo,bar</code>
     </p>
   </div>
 </div>
 
 <div class="form-group" ng-class="{'has-error' : errors.path_handling}" ng-if="route.path_handling">
-  <label class="col-sm-3 control-label">Path handling</label>
+  <label class="col-sm-3 control-label">路径处理方式</label>
   <div class="col-sm-9">
     <select
       ng-model="route.path_handling"
@@ -129,10 +124,8 @@
     >
     </select>
     <p class="help-block">
-      Controls how the Service path, Route path and requested path are combined
-      when sending a request to the upstream. See above for a detailed
-      description of each behavior. Accepted values are: <code>"v0"</code>, <code>"v1"</code>. Defaults to
-      <code>"v1"</code>.
+      控制在向上游发送请求时服务路径、路由路径和请求路径的组合方式。参见上面对每个行为的详细描述。可用值为：<code>"v0"</code>, <code>"v1"</code>，默认
+      <code>v1</code>。
     </p>
   </div>
 </div>
@@ -142,8 +135,8 @@
   ng-class="{'has-error' : errors.https_redirect_status_code}"
 >
   <label class="col-sm-3 control-label"
-    >Https redirect status code <br /><em
-      ><small class="help-block">optional</small></em
+    >HTTPS重定向状态码 <br /><em
+      ><small class="help-block">可选</small></em
     ></label
   >
   <div class="col-sm-9">
@@ -153,18 +146,15 @@
       ng-model="route.https_redirect_status_code"
     />
     <p class="help-block">
-      The status code Kong responds with when all properties of a Route match
-      except the protocol, i.e. if the protocol of the request is
-      <code>HTTP</code> instead of <code>HTTPS</code>.
-      <code>Location</code> header is injected by Kong if the field is set to
-      301, 302, 307 or 308. Defaults to <code>426</code>.
+      当路由的所有属性都匹配时，Kong会响应该状态码，除非设置的请求协议是<code>HTTP</code>而不是<code>HTTPS</code>。
+      当字段值设为301、302、307或308时，Kong会自动注入<code>Location</code>报头。 默认<code>426</code>。
     </p>
   </div>
 </div>
 <div class="form-group" ng-class="{'has-error' : errors.regex_priority}">
   <label class="col-sm-3 control-label"
-    >Regex priority <br /><em
-      ><small class="help-block">optional</small></em
+    >正则优先 <br /><em
+      ><small class="help-block">可选</small></em
     ></label
   >
   <div class="col-sm-9">
@@ -181,8 +171,8 @@
 </div>
 <div class="form-group" ng-class="{'has-error' : errors.methods}">
   <label class="col-sm-3 control-label"
-    >Methods <br /><em
-      ><small class="help-block">semi-optional</small></em
+    >方法 <br /><em
+      ><small class="help-block">半可选</small></em
     ></label
   >
   <div class="col-sm-9">
@@ -204,7 +194,7 @@
 </div>
 <div class="form-group">
   <label class="col-sm-3 control-label"
-    >Strip Path <br /><em><small class="help-block">optional</small></em></label
+    >去除路径 <br /><em><small class="help-block">可选</small></em></label
   >
   <div class="col-sm-9">
     <input
@@ -223,8 +213,8 @@
 </div>
 <div class="form-group">
   <label class="col-sm-3 control-label"
-    >Preserve Host <br /><em
-      ><small class="help-block">optional</small></em
+    >保护主机 <br /><em
+      ><small class="help-block">可选</small></em
     ></label
   >
   <div class="col-sm-9">
@@ -246,8 +236,8 @@
 </div>
 <div class="form-group" ng-class="{'has-error' : errors.protocols}">
   <label class="col-sm-3 control-label"
-    >Protocols <br /><em
-      ><small class="help-block">semi-optional</small></em
+    >协议 <br /><em
+      ><small class="help-block">半可选</small></em
     ></label
   >
   <div class="col-sm-9">
@@ -271,7 +261,7 @@
 
 <div class="form-group" ng-class="{'has-error' : errors.snis}">
   <label class="col-sm-3 control-label"
-    >SNIs <br /><em><small class="help-block">semi-optional</small></em></label
+    >SNIs <br /><em><small class="help-block">半可选</small></em></label
   >
   <div class="col-sm-9">
     <chips ng-model="route.snis">
@@ -293,8 +283,8 @@
 </div>
 <div class="form-group" ng-class="{'has-error' : errors.sources}">
   <label class="col-sm-3 control-label"
-    >Sources <br /><em
-      ><small class="help-block">semi-optional</small></em
+    >来源地 <br /><em
+      ><small class="help-block">半可选</small></em
     ></label
   >
   <div class="col-sm-9">
@@ -323,8 +313,8 @@
 </div>
 <div class="form-group" ng-class="{'has-error' : errors.destinations}">
   <label class="col-sm-3 control-label"
-    >Destinations <br /><em
-      ><small class="help-block">semi-optional</small></em
+    >目的地 <br /><em
+      ><small class="help-block">半可选</small></em
     ></label
   >
   <div class="col-sm-9">

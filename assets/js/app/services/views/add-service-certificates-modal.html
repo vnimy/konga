@@ -1,47 +1,59 @@
 <div class="modal-header warning">
-    <h4 class="modal-title" id="modal-title">
-        Add Certificates to {{service.name || service.id}}
-        <a  class="modal-close pull-right" ng-click="close()">
-            <i class="mdi mdi-close"></i>
-        </a>
-    </h4>
+  <h4 class="modal-title" id="modal-title">
+    为服务“{{service.name || service.id}}”创建证书
+    <a class="modal-close pull-right" ng-click="close()">
+      <i class="mdi mdi-close"></i>
+    </a>
+  </h4>
 </div>
 
 <div class="modal-body">
-    {{errors}}
-    <div class="form-group" ng-class="{'has-error' : errors.cert}">
-        <label class="control-label">Certificate</label>
-        <p class="help-block">Upload the certificate file</p>
-        <input type="file"
-               ngf-select ng-model="data.cert" name="data.value"
-        />
-        <div class="text-danger" ng-if="errors.cert" data-ng-bind="errors.cert"></div>
-    </div>
-    <hr>
-    <div class="form-group" ng-class="{'has-error' : errors.key}">
-        <label class="control-label">Key</label>
-        <p class="help-block">Upload the certificate .key file</p>
-        <input type="file"
-               ngf-select ng-model="data.key" name="data.value"
-        />
-        <div class="text-danger" ng-if="errors.key" data-ng-bind="errors.key"></div>
-    </div>
-    <hr>
-    <div class="form-group" ng-class="{'has-error' : errors.snis}">
-        <label class="control-label">Server Name Indications</label>
-        <p class="help-block">A comma separated list of Server Name Indications. ex: <code>ssl-example.com,other-ssl-example.com</code></p>
-        <input type="text"
-               class="form-control"
-               ng-model="data.snis" name="data.value"
-        />
-        <div class="text-danger" ng-if="errors.snis" data-ng-bind="errors.snis"></div>
-    </div>
-    <hr>
-    <div class="form-group">
-        <button type="text"
-                data-ng-disabled="uploading"
-                class="btn btn-primary btn-block" data-ng-click="submitCerts()">
-            Submit Certificates
-        </button>
-    </div>
+  {{errors}}
+  <div class="form-group" ng-class="{'has-error' : errors.cert}">
+    <label class="control-label">证书</label>
+    <p class="help-block">上传证书文件</p>
+    <input type="file" ngf-select ng-model="data.cert" name="data.value" />
+    <div
+      class="text-danger"
+      ng-if="errors.cert"
+      data-ng-bind="errors.cert"
+    ></div>
+  </div>
+  <hr />
+  <div class="form-group" ng-class="{'has-error' : errors.key}">
+    <label class="control-label">Key</label>
+    <p class="help-block">上传证书“.key”文件</p>
+    <input type="file" ngf-select ng-model="data.key" name="data.value" />
+    <div class="text-danger" ng-if="errors.key" data-ng-bind="errors.key"></div>
+  </div>
+  <hr />
+  <div class="form-group" ng-class="{'has-error' : errors.snis}">
+    <label class="control-label">服务器名称指示(SNI)</label>
+    <p class="help-block">
+      使用逗号分割服务器名称指示 如：
+      <code>ssl-example.com,other-ssl-example.com</code>
+    </p>
+    <input
+      type="text"
+      class="form-control"
+      ng-model="data.snis"
+      name="data.value"
+    />
+    <div
+      class="text-danger"
+      ng-if="errors.snis"
+      data-ng-bind="errors.snis"
+    ></div>
+  </div>
+  <hr />
+  <div class="form-group">
+    <button
+      type="text"
+      data-ng-disabled="uploading"
+      class="btn btn-primary btn-block"
+      data-ng-click="submitCerts()"
+    >
+      提交证书
+    </button>
+  </div>
 </div>
