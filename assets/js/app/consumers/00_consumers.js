@@ -4,108 +4,109 @@
   angular.module('frontend.consumers', [
     'angular.chips',
     'ngMessages',
-    'angularUtils.directives.dirPagination'
+    'angularUtils.directives.dirPagination',
   ]);
 
   // Module configuration
-  angular.module('frontend.consumers')
-    .config([
-      '$stateProvider',
-      function config($stateProvider) {
-        $stateProvider
-          .state('consumers', {
-            parent: 'frontend',
-            url: '/consumers',
-            data: {
-              activeNode: true,
-              pageName: "Consumers",
-              pageDescription: "The Consumer object represents a consumer - or a user - of an API. You can either rely on Kong as the primary datastore, or you can map the consumer list with your database to keep consistency between Kong and your existing primary datastore.",
-              //displayName : "consumers",
-              prefix: '<i class="material-icons">perm_identity</i>'
-            },
+  angular.module('frontend.consumers').config([
+    '$stateProvider',
+    function config($stateProvider) {
+      $stateProvider
+        .state('consumers', {
+          parent: 'frontend',
+          url: '/consumers',
+          data: {
+            activeNode: true,
+            pageName: '消费者',
+            pageDescription:
+              '消费者对象是API的消费者或用户。您可将Kong作为主要数据存储，也可以将消费者列表映射到您的数据库，以保持Kong和现有主要数据存储之间的一致性。',
+            displayName: '消费者',
+            prefix: '<i class="material-icons">perm_identity</i>',
+          },
 
-            views: {
-              'content@': {
-                templateUrl: 'js/app/consumers/index.html',
-                controller: 'ConsumersController'
-              }
-            }
-          })
-          .state('consumers.edit', {
-            url: '/:id',
-            data: {
-              pageName: "Edit Consumer",
-              pageDescription: null,
-              displayName: "edit consumer",
-              prefix: '<i class="material-icons">perm_identity</i>'
+          views: {
+            'content@': {
+              templateUrl: 'js/app/consumers/index.html',
+              controller: 'ConsumersController',
             },
-            views: {
-              'content@': {
-                templateUrl: 'js/app/consumers/edit-consumer.html',
-                controller: 'ConsumerController',
-
-              },
-              'details@consumers.edit': {
-                templateUrl: 'js/app/consumers/details/consumer-details.html',
-                controller: 'ConsumerDetailsController',
-              },
-              'groups@consumers.edit': {
-                templateUrl: 'js/app/consumers/groups/consumer-groups.html',
-                controller: 'ConsumerGroupsController'
-              },
-              'credentials@consumers.edit': {
-                templateUrl: 'js/app/consumers/credentials/consumer-credentials.html',
-                controller: 'ConsumerCredentialsController'
-              },
-              'apis@consumers.edit': {
-                templateUrl: 'js/app/consumers/apis/consumer-apis.html',
-                controller: 'ConsumerApisController'
-              },
-              'plugins@consumers.edit': {
-                templateUrl: 'js/app/consumers/plugins/consumer-plugins.html',
-                controller: 'ConsumerPluginsController'
-              },
-              'services@consumers.edit': {
-                templateUrl: 'js/app/consumers/services/consumer-services.html',
-                controller: 'ConsumerServicesController'
-              },
-              'routes@consumers.edit': {
-                templateUrl: 'js/app/consumers/routes/consumer-routes.html',
-                controller: 'ConsumerRoutesController'
-              }
+          },
+        })
+        .state('consumers.edit', {
+          url: '/:id',
+          data: {
+            pageName: '编辑消费者',
+            pageDescription: null,
+            displayName: '编辑消费者',
+            prefix: '<i class="material-icons">perm_identity</i>',
+          },
+          views: {
+            'content@': {
+              templateUrl: 'js/app/consumers/edit-consumer.html',
+              controller: 'ConsumerController',
             },
-            resolve: {
-              _consumer: [
-                'ConsumerService',
-                '$stateParams',
-                function (ConsumerService, $stateParams) {
-                  return ConsumerService.findById($stateParams.id)
-                }
-              ],
-              _gateway: [
-                'InfoService',
-                '$rootScope',
-                function (InfoService, $rootScope) {
-                  return new Promise((resolve, reject) => {
-                    var watcher = $rootScope.$watch('Gateway', function (newValue, oldValue) {
+            'details@consumers.edit': {
+              templateUrl: 'js/app/consumers/details/consumer-details.html',
+              controller: 'ConsumerDetailsController',
+            },
+            'groups@consumers.edit': {
+              templateUrl: 'js/app/consumers/groups/consumer-groups.html',
+              controller: 'ConsumerGroupsController',
+            },
+            'credentials@consumers.edit': {
+              templateUrl:
+                'js/app/consumers/credentials/consumer-credentials.html',
+              controller: 'ConsumerCredentialsController',
+            },
+            'apis@consumers.edit': {
+              templateUrl: 'js/app/consumers/apis/consumer-apis.html',
+              controller: 'ConsumerApisController',
+            },
+            'plugins@consumers.edit': {
+              templateUrl: 'js/app/consumers/plugins/consumer-plugins.html',
+              controller: 'ConsumerPluginsController',
+            },
+            'services@consumers.edit': {
+              templateUrl: 'js/app/consumers/services/consumer-services.html',
+              controller: 'ConsumerServicesController',
+            },
+            'routes@consumers.edit': {
+              templateUrl: 'js/app/consumers/routes/consumer-routes.html',
+              controller: 'ConsumerRoutesController',
+            },
+          },
+          resolve: {
+            _consumer: [
+              'ConsumerService',
+              '$stateParams',
+              function (ConsumerService, $stateParams) {
+                return ConsumerService.findById($stateParams.id);
+              },
+            ],
+            _gateway: [
+              'InfoService',
+              '$rootScope',
+              function (InfoService, $rootScope) {
+                return new Promise((resolve, reject) => {
+                  var watcher = $rootScope.$watch(
+                    'Gateway',
+                    function (newValue, oldValue) {
                       if (newValue) {
                         watcher(); // clear watcher
-                        resolve(newValue)
+                        resolve(newValue);
                       }
-                    })
-                  })
-                }
-              ],
-              _activeNode: [
-                'NodesService',
-                function resolve(NodesService) {
-                  return NodesService.isActiveNodeSet()
-                }
-              ],
-            },
-          })
-
-      }
-    ])
-  ;
-}());
+                    }
+                  );
+                });
+              },
+            ],
+            _activeNode: [
+              'NodesService',
+              function resolve(NodesService) {
+                return NodesService.isActiveNodeSet();
+              },
+            ],
+          },
+        });
+    },
+  ]);
+})();

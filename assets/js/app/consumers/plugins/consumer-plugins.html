@@ -1,6 +1,6 @@
 <button class="btn btn-primary margin-bottom" ng-click="onAddPlugin()">
   <i class="mdi mdi-plus"></i>
-  add new plugin
+  添加插件
 </button>
 <div class="col-md-12 bg-light-grey padding">
   <div class="input-group col-sm-4 pull-left">
@@ -11,7 +11,7 @@
       type="text"
       data-ng-model="search"
       class="form-control"
-      placeholder="search plugins..."
+      placeholder="搜索插件..."
     />
   </div>
   <dir-pagination-controls class="pull-right"></dir-pagination-controls>
@@ -21,10 +21,10 @@
     <th width="1"></th>
     <th width="1"></th>
     <th width="1"></th>
-    <th>Name</th>
-    <th>Scope</th>
-    <th>Apply to</th>
-    <th>Created</th>
+    <th>名称</th>
+    <th>范围</th>
+    <th>应用于</th>
+    <th>创建时间</th>
     <th width="1"></th>
   </tr>
   <tr
@@ -42,13 +42,13 @@
         class="mdi mdi-toggle-switch text-success clickable"
         ng-show="item.enabled"
         ng-click="togglePlugin(item)"
-        uib-tooltip="Enabled"
+        uib-tooltip="启用"
       ></i>
       <i
         class="mdi mdi-toggle-switch-off text-muted clickable"
         ng-show="!item.enabled"
         ng-click="togglePlugin(item)"
-        uib-tooltip="Disabled"
+        uib-tooltip="禁用"
       ></i>
     </td>
     <td>
@@ -123,7 +123,7 @@
       </div>
 
       <span data-ng-if="!item.api.id && !item.service.id && !item.route.id">
-        All Entrypoints
+        所有入口
       </span>
     </td>
     <td>{{item.created_at * 1000 | date : 'y-M-d'}}</td>
@@ -131,13 +131,13 @@
     <td>
       <button class="btn btn-link btn-danger" ng-click="deletePlugin(item)">
         <i class="mdi mdi-delete"></i>
-        delete
+        删除
       </button>
     </td>
   </tr>
   <tr data-ng-if="plugins.data.length === 0">
     <td colspan="100%" class="text-center text-muted">
-      <em>no data found...</em>
+      <em>无数据...</em>
     </td>
   </tr>
 </table>

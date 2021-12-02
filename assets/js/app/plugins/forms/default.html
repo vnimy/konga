@@ -66,8 +66,8 @@
                                                                 ng-model="field[getFieldProp(field)].value[getFieldProp(_field)]"
                                                                 switch-size="small"
                                                                 type="checkbox"
-                                                                switch-on-text="YES"
-                                                                switch-off-text="NO"
+                                                                switch-on-text="是"
+                                                                switch-off-text="否"
                                                         >
     
                                                     </div>
@@ -211,8 +211,8 @@
                             ng-model="value.value"
                             switch-size="small"
                             type="checkbox"
-                            switch-on-text="YES"
-                            switch-off-text="NO"
+                            switch-on-text="是"
+                            switch-off-text="否"
                             ng-change="updateApi(api)"
                     >
 
@@ -241,7 +241,7 @@
             <button type="button" data-ng-disabled="busy" class="btn btn-primary btn-block" ng-click="addPlugin()">
                 <i class="mdi mdi-check" ng-if="!busy"></i>
                 <fading-circle-spinner class="spinner spinner-invert pull-left" ng-if="busy"></fading-circle-spinner>
-                add plugin
+                添加插件
             </button>
         </div>
     </div>
@@ -250,7 +250,7 @@
             <button type="button" data-ng-disabled="busy" class="btn btn-primary btn-block" ng-click="updatePlugin()">
                 <i class="mdi mdi-check" ng-if="!busy"></i>
                 <fading-circle-spinner class="spinner spinner-invert pull-left" ng-if="busy"></fading-circle-spinner>
-                submit changes
+                提交变更
             </button>
         </div>
     </div>

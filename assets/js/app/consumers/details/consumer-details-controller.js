@@ -6,37 +6,57 @@
 (function () {
   'use strict';
 
-  angular.module('frontend.consumers')
-    .controller('ConsumerDetailsController', [
-      '_', '$scope', '$log', '$state', 'ConsumerModel', 'ListConfig', 'MessageService',
-      function controller(_, $scope, $log, $state, ConsumerModel, ListConfig, MessageService) {
+  angular.module('frontend.consumers').controller('ConsumerDetailsController', [
+    '_',
+    '$scope',
+    '$log',
+    '$state',
+    'ConsumerModel',
+    'ListConfig',
+    'MessageService',
+    function controller(
+      _,
+      $scope,
+      $log,
+      $state,
+      ConsumerModel,
+      ListConfig,
+      MessageService
+    ) {
+      ConsumerModel.setScope($scope, false, 'items', 'itemCount');
+      $scope = angular.extend(
+        $scope,
+        angular.copy(ListConfig.getConfig('consumer', ConsumerModel))
+      );
 
-        ConsumerModel.setScope($scope, false, 'items', 'itemCount');
-        $scope = angular.extend($scope, angular.copy(ListConfig.getConfig('consumer', ConsumerModel)));
+      $scope.updateConsumerDetails = updateConsumerDetails;
 
-        $scope.updateConsumerDetails = updateConsumerDetails
-
-        $scope.onTagInputKeyPress = function ($event) {
-          if ($event.keyCode === 13) {
-            if (!$scope.consumer.tags) $scope.consumer.tags = [];
-            $scope.consumer.tags = $scope.consumer.tags.concat($event.currentTarget.value);
-            $event.currentTarget.value = null;
-          }
+      $scope.onTagInputKeyPress = function ($event) {
+        if ($event.keyCode === 13) {
+          if (!$scope.consumer.tags) $scope.consumer.tags = [];
+          $scope.consumer.tags = $scope.consumer.tags.concat(
+            $event.currentTarget.value
+          );
+          $event.currentTarget.value = null;
         }
+      };
 
-        function updateConsumerDetails() {
-          ConsumerModel.update($scope.consumer.id, _.omit($scope.consumer, ['id']))
-            .then(function (res) {
-              $log.debug(res.data)
-              $scope.consumer = res.data
-              $scope.errors = {}
-              MessageService.success("Consumer updated successfully!")
-            }).catch(function (err) {
-            $log.error("Failed to update consumer", err)
-            $scope.handleErrors(err)
+      function updateConsumerDetails() {
+        ConsumerModel.update(
+          $scope.consumer.id,
+          _.omit($scope.consumer, ['id'])
+        )
+          .then(function (res) {
+            $log.debug(res.data);
+            $scope.consumer = res.data;
+            $scope.errors = {};
+            MessageService.success('消费者更新成功！');
           })
-        }
-
+          .catch(function (err) {
+            $log.error('Failed to update consumer', err);
+            $scope.handleErrors(err);
+          });
       }
-    ])
-}());
+    },
+  ]);
+})();

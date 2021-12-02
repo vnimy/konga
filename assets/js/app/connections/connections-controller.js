@@ -49,14 +49,6 @@
       InfoService,
       ListConfig
     ) {
-      $scope.titleItemNames = {
-        name: '名称',
-        type: '类型',
-        'kong admin url': 'Kong管理URL',
-        'kong version': 'Kong版本',
-        created: '创建时间',
-      };
-
       NodeModel.setScope($scope, false, 'items', 'itemCount');
 
       // Add default list configuration variable to current scope

@@ -56,14 +56,6 @@
       $log.debug('_count', _count);
       $log.debug('titleItems', $scope.titleItems);
 
-      $scope.titleItemNames = {
-        username: '用户名',
-        'first name': '姓氏',
-        'last name': '名称',
-        created: '创建时间',
-        updated: '更新时间',
-      };
-
       // Initialize default sort data
 
       $scope.paging = {

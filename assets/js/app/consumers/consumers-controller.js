@@ -6,119 +6,141 @@
 (function () {
   'use strict';
 
-  angular.module('frontend.consumers')
-    .controller('ConsumersController', [
-      '_', '$scope', '$log', '$state', 'ConsumerService', '$q', 'MessageService',
-      'UserService', 'SocketHelperService',
-      '$uibModal', 'DialogService', 'ListConfig', 'ConsumerModel',
-      function controller(_, $scope, $log, $state, ConsumerService, $q, MessageService,
-                          UserService, SocketHelperService,
-                          $uibModal, DialogService, ListConfig, ConsumerModel) {
+  angular.module('frontend.consumers').controller('ConsumersController', [
+    '_',
+    '$scope',
+    '$log',
+    '$state',
+    'ConsumerService',
+    '$q',
+    'MessageService',
+    'UserService',
+    'SocketHelperService',
+    '$uibModal',
+    'DialogService',
+    'ListConfig',
+    'ConsumerModel',
+    function controller(
+      _,
+      $scope,
+      $log,
+      $state,
+      ConsumerService,
+      $q,
+      MessageService,
+      UserService,
+      SocketHelperService,
+      $uibModal,
+      DialogService,
+      ListConfig,
+      ConsumerModel
+    ) {
+      ConsumerModel.setScope($scope, false, 'items', 'itemCount');
+      $scope = angular.extend(
+        $scope,
+        angular.copy(ListConfig.getConfig('consumer', ConsumerModel))
+      );
+      $scope.user = UserService.user();
+      $scope.openCreateConsumerModal = openCreateConsumerModal;
 
-        ConsumerModel.setScope($scope, false, 'items', 'itemCount');
-        $scope = angular.extend($scope, angular.copy(ListConfig.getConfig('consumer', ConsumerModel)));
-        $scope.user = UserService.user();
-        $scope.openCreateConsumerModal = openCreateConsumerModal
+      function openCreateConsumerModal() {
+        $uibModal.open({
+          animation: true,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'js/app/consumers/create-consumer-modal.html',
+          controller: function (
+            $scope,
+            $rootScope,
+            $log,
+            $uibModalInstance,
+            MessageService,
+            ConsumerModel
+          ) {
+            $scope.consumer = {
+              username: '',
+              custom_id: '',
+              tags: [],
+            };
 
+            $scope.close = close;
+            $scope.submit = submit;
 
-        function openCreateConsumerModal() {
-          $uibModal.open({
-            animation: true,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: 'js/app/consumers/create-consumer-modal.html',
-            controller: function ($scope, $rootScope, $log, $uibModalInstance, MessageService, ConsumerModel) {
+            $scope.onTagInputKeyPress = function ($event) {
+              if ($event.keyCode === 13) {
+                if (!$scope.consumer.tags) $scope.consumer.tags = [];
+                $scope.consumer.tags = $scope.consumer.tags.concat(
+                  $event.currentTarget.value
+                );
+                $event.currentTarget.value = null;
+              }
+            };
 
-              $scope.consumer = {
-                username: '',
-                custom_id: '',
-                tags: []
+            function submit() {
+              $scope.errors = {};
+
+              var data = _.cloneDeep($scope.consumer);
+              if (!data.custom_id) {
+                delete data.custom_id;
               }
 
-              $scope.close = close
-              $scope.submit = submit
-
-              $scope.onTagInputKeyPress = function ($event) {
-                if($event.keyCode === 13) {
-                  if(!$scope.consumer.tags) $scope.consumer.tags = [];
-                  $scope.consumer.tags = $scope.consumer.tags.concat($event.currentTarget.value);
-                  $event.currentTarget.value = null;
-                }
+              if (!data.username) {
+                delete data.username;
               }
 
-              function submit() {
-
-                $scope.errors = {}
-
-                var data = _.cloneDeep($scope.consumer)
-                if (!data.custom_id) {
-                  delete data.custom_id;
-                }
-
-                if (!data.username) {
-                  delete data.username;
-                }
-
-                ConsumerModel.create(data)
-                  .then(function (res) {
-                    MessageService.success("Consumer created successfully!")
-                    $rootScope.$broadcast('consumer.created', res.data)
-                    close()
-                    // Navigate to the newly created consumers page
-                    $state.go('consumers.edit',{id:res.data.id});
-                  }).catch(function (err) {
-                  $log.error("Failed to create consumer", err)
+              ConsumerModel.create(data)
+                .then(function (res) {
+                  MessageService.success('消费者创建成功！');
+                  $rootScope.$broadcast('consumer.created', res.data);
+                  close();
+                  // Navigate to the newly created consumers page
+                  $state.go('consumers.edit', { id: res.data.id });
+                })
+                .catch(function (err) {
+                  $log.error('创建消费者失败。', err);
                   ConsumerModel.handleError($scope, err);
-
                 });
-              }
+            }
 
-
-              function close() {
-                $uibModalInstance.dismiss()
-              }
-            },
-            controllerAs: '$ctrl',
-          });
-        }
-
-
-        function _fetchData() {
-
-          $scope.loading = true;
-          ConsumerModel.load({
-            size: $scope.itemsFetchSize
-          }).then(function (response) {
-            $scope.items = response;
-            $scope.loading = false;
-
-          })
-        }
-
-
-        $scope.$on('consumer.created', function (ev, user) {
-          _fetchData()
-        })
-
-
-        $scope.$on('consumer.updated', function (ev, user) {
-          _fetchData()
-        })
-
-        $scope.$on('credentials.assigned', function (ev, user) {
-          _fetchData()
-        })
-
-        $scope.$on('search', function (ev, user) {
-          _fetchData()
-        })
-
-        $scope.$on('user.node.updated', function (ev, node) {
-          _fetchData()
-        })
-
-        _fetchData();
-
+            function close() {
+              $uibModalInstance.dismiss();
+            }
+          },
+          controllerAs: '$ctrl',
+        });
       }
-    ]);
-}());
+
+      function _fetchData() {
+        $scope.loading = true;
+        ConsumerModel.load({
+          size: $scope.itemsFetchSize,
+        }).then(function (response) {
+          $scope.items = response;
+          $scope.loading = false;
+        });
+      }
+
+      $scope.$on('consumer.created', function (ev, user) {
+        _fetchData();
+      });
+
+      $scope.$on('consumer.updated', function (ev, user) {
+        _fetchData();
+      });
+
+      $scope.$on('credentials.assigned', function (ev, user) {
+        _fetchData();
+      });
+
+      $scope.$on('search', function (ev, user) {
+        _fetchData();
+      });
+
+      $scope.$on('user.node.updated', function (ev, node) {
+        _fetchData();
+      });
+
+      _fetchData();
+    },
+  ]);
+})();

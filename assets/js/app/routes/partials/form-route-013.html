@@ -8,7 +8,7 @@
 </div>
 <div class="form-group" ng-class="{'has-error' : errors.name}">
   <label class="col-sm-3 control-label"
-    >Name <br /><em><small class="help-block">optional</small></em></label
+    >名称 <br /><em><small class="help-block">可选</small></em></label
   >
   <div class="col-sm-9">
     <input ng-model="route.name" class="form-control" />
@@ -17,12 +17,12 @@
       ng-if="errors.name"
       data-ng-bind="errors.name"
     ></div>
-    <p class="help-block">The name of the Route.</p>
+    <p class="help-block">路由的名称</p>
   </div>
 </div>
 <div class="form-group" ng-if="isGatewayVersionEqOrGreater('1.1.0-rc1')">
   <label class="col-sm-3 control-label"
-    >Tags <br /><em><small class="help-block">optional</small></em></label
+    >标签 <br /><em><small class="help-block">可选</small></em></label
   >
   <div class="col-sm-9">
     <chips ng-model="route.tags">
@@ -39,12 +39,12 @@
         uib-typeahead="tag for tag in tags | filter:$viewValue | limitTo:10"
       />
     </chips>
-    <p class="help-block">Optionally add tags to the route</p>
+    <p class="help-block">路由的标签</p>
   </div>
 </div>
 <div class="form-group" ng-class="{'has-error' : errors.hosts}">
   <label class="col-sm-3 control-label"
-    >Hosts <br /><em><small class="help-block">semi-optional</small></em></label
+    >主机(Host) <br /><em><small class="help-block">半可选</small></em></label
   >
   <div class="col-sm-9">
     <chips ng-model="route.hosts">
@@ -63,14 +63,13 @@
       data-ng-bind="errors.hosts"
     ></div>
     <p class="help-block">
-      A list of domain names that match this Route. For example: example.com. At
-      least one of hosts, paths, or methods must be set.
+      匹配路由的域名列表，如：example.com。<code>主机</code>、<code>路径</code>和<code>方法</code>中至少设置其中一个。
     </p>
   </div>
 </div>
 <div class="form-group" ng-class="{'has-error' : errors.paths}">
   <label class="col-sm-3 control-label"
-    >Paths <br /><em><small class="help-block">semi-optional</small></em></label
+    >路径(Path) <br /><em><small class="help-block">半可选</small></em></label
   >
   <div class="col-sm-9">
     <chips ng-model="route.paths">
@@ -83,17 +82,13 @@
       <input chip-control />
     </chips>
     <p class="help-block">
-      A list of paths that match this Route. For example: /my-path. At least one
-      of <code>hosts</code>, <code>paths</code>, or <code>methods</code> must be
-      set.
+      匹配路由的路径，如：/my-path。<code>主机</code>、<code>路径</code>和<code>方法</code>中必须至少设置其中一个。
     </p>
   </div>
 </div>
 <div class="form-group" ng-class="{'has-error' : errors.headers}">
   <label class="col-sm-3 control-label"
-    >Headers <br /><em
-      ><small class="help-block">semi-optional</small></em
-    ></label
+    >报头(Header) <br /><em><small class="help-block">半可选</small></em></label
   >
   <div class="col-sm-9">
     <chips ng-model="route.headers">
@@ -106,11 +101,9 @@
       <input chip-control />
     </chips>
     <p class="help-block">
-      One or more lists of values indexed by header name that will cause this
-      Route to match if present in the request. The <code>Host</code> header
-      cannot be used with this attribute: hosts should be specified using the
-      <code>hosts</code> attribute.<br />
-      <code>Field values format example: x-some-header:foo,bar</code>
+      一个或多个报头值，如果出现在请求中，将匹配该路由。
+      不能使用主机头<code>Host</code>，如要匹配主机，请设置<code>主机</code>属性。<br />
+      字段值示例：<code>x-some-header:foo,bar</code>
     </p>
   </div>
 </div>
@@ -119,8 +112,8 @@
   ng-class="{'has-error' : errors.https_redirect_status_code}"
 >
   <label class="col-sm-3 control-label"
-    >Https redirect status code <br /><em
-      ><small class="help-block">optional</small></em
+    >HTTPS重定向状态码 <br /><em
+      ><small class="help-block">可选</small></em
     ></label
   >
   <div class="col-sm-9">
@@ -130,37 +123,27 @@
       ng-model="route.https_redirect_status_code"
     />
     <p class="help-block">
-      The status code Kong responds with when all properties of a Route match
-      except the protocol, i.e. if the protocol of the request is
-      <code>HTTP</code> instead of <code>HTTPS</code>.
-      <code>Location</code> header is injected by Kong if the field is set to
-      301, 302, 307 or 308. Defaults to <code>426</code>.
+      当路由的所有属性都匹配时，Kong会响应该状态码，除非设置的请求协议是<code>HTTP</code>而不是<code>HTTPS</code>。
+      当字段值设为301、302、307或308时，Kong会自动注入<code>Location</code>报头。
+      默认<code>426</code>。
     </p>
   </div>
 </div>
 <div class="form-group" ng-class="{'has-error' : errors.regex_priority}">
   <label class="col-sm-3 control-label"
-    >Regex priority <br /><em
-      ><small class="help-block">optional</small></em
-    ></label
+    >正则优先级 <br /><em><small class="help-block">可选</small></em></label
   >
   <div class="col-sm-9">
     <input type="number" class="form-control" ng-model="route.regex_priority" />
     <p class="help-block">
-      A number used to choose which route resolves a given request when several
-      routes match it using regexes simultaneously. When two routes match the
-      path and have the same <code>regex_priority</code>, the older one (lowest
-      <code>created_at</code>) is used. Note that the priority for non-regex
-      routes is different (longer non-regex routes are matched before shorter
-      ones). Defaults to <code>0</code>.
+      当请求匹配多个正则路由时，根据优先级来优先匹配，如果<code>优先级</code>一样，那么优先匹配<code>创建时间</code>较早的路由规则。
+      注意，非正则路由的优先级会优先匹配较长的路由。默认为<code>0</code>
     </p>
   </div>
 </div>
 <div class="form-group" ng-class="{'has-error' : errors.methods}">
   <label class="col-sm-3 control-label"
-    >Methods <br /><em
-      ><small class="help-block">semi-optional</small></em
-    ></label
+    >方法(Method) <br /><em><small class="help-block">半可选</small></em></label
   >
   <div class="col-sm-9">
     <chips ng-model="route.methods">
@@ -173,15 +156,17 @@
       <input chip-control />
     </chips>
     <p class="help-block">
-      A list of HTTP methods that match this Route. At least one of
-      <code>hosts</code>, <code>paths</code>, or <code>methods</code> must be
-      set.
+      匹配路由的HTTP方法列表。
+      <code>主机</code
+      >、<code>路径</code>和<code>方法</code>中必须至少设置其中一个。
     </p>
   </div>
 </div>
 <div class="form-group">
   <label class="col-sm-3 control-label"
-    >Strip Path <br /><em><small class="help-block">optional</small></em></label
+    >删除匹配路径前缀(Strip Path) <br /><em
+      ><small class="help-block">可选</small></em
+    ></label
   >
   <div class="col-sm-9">
     <input
@@ -189,19 +174,16 @@
       ng-model="route.strip_path"
       switch-size="small"
       type="checkbox"
-      switch-on-text="YES"
-      switch-off-text="NO"
+      switch-on-text="是"
+      switch-off-text="否"
     />
-    <p class="help-block">
-      When matching a Route via one of the <code>paths</code>, strip the
-      matching prefix from the upstream request URL.
-    </p>
+    <p class="help-block">当匹配路径时，将会删除匹配的前缀并附加到上游URL。</p>
   </div>
 </div>
 <div class="form-group">
   <label class="col-sm-3 control-label"
-    >Preserve Host <br /><em
-      ><small class="help-block">optional</small></em
+    >保留主机标识(Preserve Host) <br /><em
+      ><small class="help-block">可选</small></em
     ></label
   >
   <div class="col-sm-9">
@@ -210,21 +192,20 @@
       ng-model="route.preserve_host"
       switch-size="small"
       type="checkbox"
-      switch-on-text="YES"
-      switch-off-text="NO"
+      switch-on-text="是"
+      switch-off-text="否"
     />
     <p class="help-block">
-      When matching a Route via one of the <code>hosts</code> domain names, use
-      the request <code>Host</code> header in the upstream request headers. By
-      default set to <code>false</code>, and the upstream Host header will be
-      that of the Service's <code>host</code>
+      当通过<code>主机</code>进行匹配时，
+      客户端请求报头的<code>Host</code>通过Kong透传到上游服务，而不是从upstream_url提取。
+      默认<code>false</code>，此时会使用上游服务器的<code>host</code>来作为报头<code>Host</code>的值。
     </p>
   </div>
 </div>
 <div class="form-group" ng-class="{'has-error' : errors.protocols}">
   <label class="col-sm-3 control-label"
-    >Protocols <br /><em
-      ><small class="help-block">semi-optional</small></em
+    >协议(Protocol) <br /><em
+      ><small class="help-block">半可选</small></em
     ></label
   >
   <div class="col-sm-9">
@@ -238,17 +219,17 @@
       <input chip-control />
     </chips>
     <p class="help-block">
-      A list of the protocols this Route should allow. By default it is
-      <code>["http", "https"]</code>, which means that the Route accepts both.
-      When set to <code>["https"]</code>, HTTP requests are answered with a
-      request to upgrade to HTTPS.
+      路由协议列表。默认是<code>["http", "https"]</code>，意思是接受这两种协议。
+      当设置为<code>["https"]</code>时，HTTP请求将升级到HTTPS。
     </p>
   </div>
 </div>
 
 <div class="form-group" ng-class="{'has-error' : errors.snis}">
   <label class="col-sm-3 control-label"
-    >SNIs <br /><em><small class="help-block">semi-optional</small></em></label
+    >服务器名称指示(SNI) <br /><em
+      ><small class="help-block">半可选</small></em
+    ></label
   >
   <div class="col-sm-9">
     <chips ng-model="route.snis">
@@ -261,18 +242,13 @@
       <input chip-control />
     </chips>
     <p class="help-block">
-      A list of SNIs that match this Route when using stream routing. When using
-      <code>tcp</code> or <code>tls</code> protocols, at least one of
-      <code>snis</code>, <code>sources</code>, or <code>destinations</code> must
-      be set.
+      匹配路由的SNI列表。当使用<code>TCP</code>或<code>TLS</code>协议时，<code>服务器名称指示(SNI)</code>、<code>来源地</code>和<code>目的地</code>中必须至少设置其中一个。
     </p>
   </div>
 </div>
 <div class="form-group" ng-class="{'has-error' : errors.sources}">
   <label class="col-sm-3 control-label"
-    >Sources <br /><em
-      ><small class="help-block">semi-optional</small></em
-    ></label
+    >来源地 <br /><em><small class="help-block">半可选</small></em></label
   >
   <div class="col-sm-9">
     <chips ng-model="route.sources">
@@ -285,24 +261,16 @@
       <input chip-control />
     </chips>
     <p class="help-block">
-      A list of IP sources of incoming connections that match this Route when
-      using stream routing. Each entry is an object with fields “ip” (optionally
-      in CIDR range notation) and/or “port”. When using <code>tcp</code> or
-      <code>tls</code> protocols, at least one of <code>snis</code>,
-      <code>sources</code>, or <code>destinations</code> must be set.
+      传入连接的来源IP地址列表。格式为<code>CIDR</code>或<code>IP:端口</code>。
+      当使用<code>TCP</code>或<code>TLS</code>协议时，<code>服务器名称指示(SNI)</code>、<code>来源地</code>和<code>目的地</code>中必须至少设置其中一个。
       <br />
-      <code
-        >The field expects values with ip:port format. ex:
-        192.168.1.2:3000</code
-      >
+      如：<code>192.168.1.2:3000</code>、<code>192.168.0.0/16</code>
     </p>
   </div>
 </div>
 <div class="form-group" ng-class="{'has-error' : errors.destinations}">
   <label class="col-sm-3 control-label"
-    >Destinations <br /><em
-      ><small class="help-block">semi-optional</small></em
-    ></label
+    >目的地 <br /><em><small class="help-block">半可选</small></em></label
   >
   <div class="col-sm-9">
     <chips ng-model="route.destinations">
@@ -315,17 +283,10 @@
       <input chip-control />
     </chips>
     <p class="help-block">
-      A list of IP destinations of incoming connections that match this Route
-      when using stream routing. Each entry is an object with fields “ip”
-      (optionally in CIDR range notation) and/or “port”. When using
-      <code>tcp</code> or <code>tls</code> protocols, at least one of
-      <code>snis</code>, <code>sources</code>, or <code>destinations</code> must
-      be set.
+      传入连接的目的IP地址列表。格式为<code>CIDR</code>或<code>IP:端口</code>。
+      当使用<code>TCP</code>或<code>TLS</code>协议时，<code>服务器名称指示(SNI)</code>、<code>来源地</code>和<code>目的地</code>中必须至少设置其中一个。
       <br />
-      <code
-        >The field expects values with ip:port format. ex:
-        192.168.1.2:3000</code
-      >
+      如：<code>192.168.1.2:3000</code>、<code>192.168.0.0/16</code>
     </p>
   </div>
 </div>

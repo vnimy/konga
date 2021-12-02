@@ -6,81 +6,116 @@
 (function () {
   'use strict';
 
-  angular.module('frontend.consumers')
-    .controller('ConsumerGroupsController', [
-      '_', '$scope', '$log', '$state', 'ConsumerService','$stateParams', 'ACLModel', 'ListConfig',
-      'MessageService', 'DialogService', '$uibModal',
-      function controller(_, $scope, $log, $state, ConsumerService,$stateParams, ACLModel, ListConfig,
-                          MessageService, DialogService, $uibModal) {
+  angular.module('frontend.consumers').controller('ConsumerGroupsController', [
+    '_',
+    '$scope',
+    '$log',
+    '$state',
+    'ConsumerService',
+    '$stateParams',
+    'ACLModel',
+    'ListConfig',
+    'MessageService',
+    'DialogService',
+    '$uibModal',
+    function controller(
+      _,
+      $scope,
+      $log,
+      $state,
+      ConsumerService,
+      $stateParams,
+      ACLModel,
+      ListConfig,
+      MessageService,
+      DialogService,
+      $uibModal
+    ) {
+      ACLModel.setScope($scope, false, 'items', 'itemCount');
+      $scope = angular.extend(
+        $scope,
+        angular.copy(ListConfig.getConfig('consumerACLs', ACLModel))
+      );
+      $scope.addGroup = addGroup;
+      $scope.deleteGroup = deleteConsumerGroup;
 
-        ACLModel.setScope($scope, false, 'items', 'itemCount');
-        $scope = angular.extend($scope, angular.copy(ListConfig.getConfig('consumerACLs',ACLModel)));
-        $scope.addGroup = addGroup
-        $scope.deleteGroup = deleteConsumerGroup
-        
-        function addGroup(consumer) {
-          $uibModal.open({
-            animation: true,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: 'js/app/consumers/groups/create-group-modal.html',
-            controller: ['$scope', '$log', '$rootScope', '$uibModalInstance', 'ConsumerService', '_consumer',
-              function ($scope, $log, $rootScope, $uibModalInstance, ConsumerService, _consumer) {
+      function addGroup(consumer) {
+        $uibModal.open({
+          animation: true,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'js/app/consumers/groups/create-group-modal.html',
+          controller: [
+            '$scope',
+            '$log',
+            '$rootScope',
+            '$uibModalInstance',
+            'ConsumerService',
+            '_consumer',
+            function (
+              $scope,
+              $log,
+              $rootScope,
+              $uibModalInstance,
+              ConsumerService,
+              _consumer
+            ) {
+              $scope.close = close;
+              $scope.createGroup = createGroup;
+              $scope.acl = {
+                group: '',
+              };
 
-                $scope.close = close
-                $scope.createGroup = createGroup
-                $scope.acl = {
-                  group: '',
-                }
-
-                function createGroup() {
-                  ConsumerService.addAcl(_consumer.id, $scope.acl).then(function (data) {
-                    fetchData()
-                    close()
-                  }).catch(function (err) {
-                    $log.error(err)
-                    $scope.errors = ACLModel.handleError($scope, err);
+              function createGroup() {
+                ConsumerService.addAcl(_consumer.id, $scope.acl)
+                  .then(function (data) {
+                    fetchData();
+                    close();
                   })
-
-                }
-
-                function close() {
-                  $uibModalInstance.dismiss()
-                }
-              }],
-            controllerAs: '$ctrl',
-            resolve: {
-              _consumer: function () {
-                return consumer
+                  .catch(function (err) {
+                    $log.error(err);
+                    $scope.errors = ACLModel.handleError($scope, err);
+                  });
               }
-            }
-          });
-        }
 
-        function deleteConsumerGroup(group) {
-          DialogService.confirm(
-            "Delete Group", "Really want to remove the group from the consumer?",
-            ['No', 'Remove it!'],
-            function accept() {
-              ConsumerService.deleteAcl($scope.consumer.id, group.id)
-                .then(function (data) {
-                  fetchData()
-                })
-
-            }, function decline() {
-            })
-
-        }
-
-        function fetchData() {
-          ConsumerService.fetchAcls($scope.consumer.id)
-            .then(function (res) {
-              $scope.items = res.data;
-              console.log('ACLS =>', $scope.items);
-            })
-        }
-
-        fetchData();
+              function close() {
+                $uibModalInstance.dismiss();
+              }
+            },
+          ],
+          controllerAs: '$ctrl',
+          resolve: {
+            _consumer: function () {
+              return consumer;
+            },
+          },
+        });
       }
-    ])
-}());
+
+      function deleteConsumerGroup(group) {
+        DialogService.confirm(
+          '删除分组',
+          '是否要删除该消费者的分组？',
+          ['否', '删除'],
+          function accept() {
+            ConsumerService.deleteAcl($scope.consumer.id, group.id).then(
+              function (data) {
+                fetchData();
+              }
+            );
+          },
+          function decline() {}
+        );
+      }
+
+      function fetchData() {
+        ConsumerService.fetchAcls($scope.consumer.id).then(function (res) {
+          $scope.items = res.data;
+          console.log('ACLS =>', $scope.items);
+        });
+      }
+
+      fetchData();
+    },
+  ]);
+})();

@@ -35,15 +35,6 @@
       $scope.openAddRouteModal = openAddRouteModal;
       $scope.updateRoute = updateRoute;
 
-      $scope.titleItemNames = {
-        'name / id': '名称 / ID',
-        tags: '标签',
-        hosts: '主机',
-        service: '服务',
-        paths: '路径',
-        created: '创建时间',
-      };
-
       /**
        * -----------------------------------------------------------------------------------------------------------
        * Internal Functions

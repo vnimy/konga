@@ -17,7 +17,7 @@
             pageDescription:
               '' +
               '路由实体定义匹配客户端请求的规则。每个路由都与一个服务相关联，而一个服务可能有多个路由与它相关联。每个匹配给定路由的请求都将被代理到其关联的服务。',
-            //displayName : "routes",
+            displayName: '路由',
             prefix: '<i class="material-icons">cloud_queue</i>',
           },
           views: {
@@ -43,7 +43,7 @@
           data: {
             pageName: '路由',
             pageDescription: '',
-            displayName: 'route',
+            displayName: '详情',
             prefix: '<i class="mdi mdi-pencil"></i>',
           },
           views: {

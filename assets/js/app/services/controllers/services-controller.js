@@ -35,13 +35,6 @@
       $scope.openAddServiceModal = openAddServiceModal;
       $scope.updateService = updateService;
 
-      $scope.titleItemNames = {
-        name: '名称',
-        host: '主机',
-        tags: '标签',
-        created: '创建时间',
-      };
-
       /**
        * -----------------------------------------------------------------------------------------------------------
        * Internal Functions

@@ -7,7 +7,7 @@
         class="btn btn-primary"
       >
         <i class="mdi mdi-plus"></i>
-        Add global plugins
+        添加全局插件
       </a>
     </div>
     <list-search
@@ -72,14 +72,14 @@
               ng-class="{'clickable': user.hasPermission($state.name.split('.')[0],'update')}"
               ng-show="item.enabled"
               ng-click="user.hasPermission($state.name.split('.')[0],'update') && togglePlugin(item)"
-              uib-tooltip="Enabled"
+              uib-tooltip="启用"
             ></i>
             <i
               class="mdi mdi-toggle-switch-off text-muted"
               ng-class="{'clickable': user.hasPermission($state.name.split('.')[0],'update')}"
               ng-show="!item.enabled"
               ng-click="user.hasPermission($state.name.split('.')[0],'update') && togglePlugin(item)"
-              uib-tooltip="Disabled"
+              uib-tooltip="禁用"
             ></i>
           </td>
           <td>
@@ -104,7 +104,7 @@
               >{{item.route.id}}</a
             >
             <span data-ng-if="!item.api && !item.service && !item.route">
-              All Entrypoints
+              全部入口
             </span>
           </td>
           <td>
@@ -113,7 +113,7 @@
               data-ui-sref="consumers.edit({id:item.consumer.id})"
               >{{item.consumer.id}}</a
             >
-            <span data-ng-if="!item.consumer">All consumers</span>
+            <span data-ng-if="!item.consumer">全部消费者</span>
           </td>
           <td>{{item.created_at * 1000 | date : 'y-M-d'}}</td>
 
@@ -124,13 +124,13 @@
               class="btn btn-danger btn-link"
             >
               <i class="mdi mdi-delete"></i>
-              Delete
+              删除
             </button>
           </td>
         </tr>
         <tr data-ng-if="items.data.length === 0">
           <td colspan="100%" class="text-center text-muted">
-            <em>no data found...</em>
+            <em>无数据...</em>
           </td>
         </tr>
       </table>

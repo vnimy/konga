@@ -11,36 +11,38 @@
  *
  * @todo do we need some queue dismiss?
  */
-(function() {
-    'use strict';
+(function () {
+  'use strict';
 
-    angular.module('frontend.core.services')
-        .factory('NodesService', [
-            'NodeModel', '$q','$state','$localStorage',
-            function factory(NodeModel, $q, $state, $localStorage) {
-                return {
-                    activeNode : function() {
-                        return $localStorage.credentials.user.node
-                    },
-                    authorize: function authorize(needsActiveNode) {
-                        if(needsActiveNode)
-                            return $localStorage.credentials && $localStorage.credentials.user.node
-                        return true;
-                    },
-                    isActiveNodeSet : function() {
-                        var defer = $q.defer()
+  angular.module('frontend.core.services').factory('NodesService', [
+    'NodeModel',
+    '$q',
+    '$state',
+    '$localStorage',
+    function factory(NodeModel, $q, $state, $localStorage) {
+      return {
+        activeNode: function () {
+          return $localStorage.credentials.user.node;
+        },
+        authorize: function authorize(needsActiveNode) {
+          if (needsActiveNode)
+            return (
+              $localStorage.credentials && $localStorage.credentials.user.node
+            );
+          return true;
+        },
+        isActiveNodeSet: function () {
+          var defer = $q.defer();
 
-                        if($localStorage.credentials.user.node){
-                            defer.resolve($localStorage.credentials.user.node.id)
-                        }else{
-                            $state.go('connections')
-                            defer.reject("No active nodes found")
-
-                        }
-                        return defer.promise
-                    }
-                }
-            }
-        ])
-    ;
-}());
+          if ($localStorage.credentials.user.node) {
+            defer.resolve($localStorage.credentials.user.node.id);
+          } else {
+            $state.go('connections');
+            defer.reject('未找到活动的节点');
+          }
+          return defer.promise;
+        },
+      };
+    },
+  ]);
+})();

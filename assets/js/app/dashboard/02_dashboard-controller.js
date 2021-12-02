@@ -136,7 +136,7 @@
                 ],
               },
             },
-            series: ['Connections'],
+            series: ['连接'],
             data: [
               $scope.status.server.connections_active,
               $scope.status.server.connections_reading,
@@ -171,7 +171,7 @@
               //    }]
               //}
             },
-            series: ['database'],
+            series: ['数据库'],
             data: Object.keys($scope.status.database).map(function (key) {
               return $scope.status.database[key];
             }),
