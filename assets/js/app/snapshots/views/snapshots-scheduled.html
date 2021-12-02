@@ -3,7 +3,7 @@
     <div class="pull-left">
       <button class="btn btn-link btn-primary" data-ng-click="schedule()">
         <i class="mdi mdi-calendar"></i>
-        add schedule
+        添加计划任务
       </button>
     </div>
     <list-search
@@ -55,21 +55,21 @@
       </td>
       <td><strong>{{item.connection.name}}</strong></td>
       <td>{{prettyCron(item.cron)}}</td>
-      <td>{{item.createdAt | date : "y-M-d @HH:mm"}}</td>
+      <td>{{item.createdAt | date : "y-M-d HH:mm"}}</td>
       <td>
         <button
           class="btn btn-danger btn-link"
           ng-click="deleteItem($index,item)"
         >
           <i class="mdi mdi-delete"></i>
-          Delete
+          删除
         </button>
       </td>
     </tr>
 
     <tr data-ng-if="items.length === 0">
       <td colspan="100%" class="text-center">
-        <h5>No items found...</h5>
+        <h5>无数据...</h5>
       </td>
     </tr>
   </table>
