@@ -7,8 +7,7 @@
         <p class="lead">
           未发现活动的连接。<br />
           <small class="text-muted"
-            >Activate one from the
-            <a ui-sref="connections">Connections</a> page.</small
+            >请在<a ui-sref="connections">连接</a>页面启动一个连接。</small
           >
         </p>
       </div>
@@ -18,8 +17,8 @@
         <img src="images/conn_sync-100.png" class="margin-bottom" />
         <h3>欢迎！</h3>
         <p class="lead">
-          First of all, lets setup a connection to Kong Admin.<br />
-          <small class="text-muted">Select a connection type.</small>
+          首先，来设置一个Kong管理连接。<br />
+          <small class="text-muted">选择一个连接方式。</small>
         </p>
       </div>
       <div class="col-md-12">
@@ -33,11 +32,10 @@
   <div class="row" ng-if="user.node && !Gateway && error">
     <div class="col-md-12 text-center">
       <img src="images/attention.png" class="margin-bottom" />
-      <h2>Something went wrong...</h2>
+      <h2>出现一些错误...</h2>
       <p class="lead">
-        Failed to connect to <strong>{{user.node.name}}</strong>.<br />
-        Make sure your active <a ui-sref="connections">connection</a> is valid
-        and Kong is up and running.
+        连接<strong>{{user.node.name}}</strong>失败。<br />
+        请确认<a ui-sref="connections">连接</a>有效且Kong服务正常运行。
       </p>
     </div>
   </div>

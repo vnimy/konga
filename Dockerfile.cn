@@ -1,0 +1,8 @@
+FROM pantsel/konga
+
+WORKDIR /app
+
+COPY api /app/api
+COPY assets/js/app /app/assets/js/app
+
+ENTRYPOINT ["/app/start.sh"]
